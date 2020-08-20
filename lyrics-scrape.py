@@ -10,7 +10,10 @@ urls = urlFile.readlines()
 songCount = 0
 lineCount = 0
 for url in urls:
-    page = requests.get(url)
+    try:
+        page = requests.get(url)
+    except requests.exceptions.RequestException as e:
+        continue;
     f = html.fromstring(page.content)#opens the page
     lyrics = f.xpath('//p[@class="lyric"]/text()')#get all the lyircs
     songCount += 1
